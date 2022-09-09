@@ -5,16 +5,19 @@ import java.io.FileReader;
 
 import com.google.gson.Gson;
 
-public class AppCarregar {
+public class AppCarregarJson {
     public static void main(String[] args) throws Exception {
         
         Lanchonete lanchonete = new Lanchonete();
 
-        lanchonete.carregarDados();
+        lanchonete.carregarJson();
 
         System.out.println(lanchonete.getItens());
 
         System.out.println(lanchonete.getSanduiches());
+
+
+
 
         
 

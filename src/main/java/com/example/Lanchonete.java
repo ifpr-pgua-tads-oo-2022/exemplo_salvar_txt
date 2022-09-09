@@ -2,10 +2,13 @@ package com.example;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
 
 public class Lanchonete {
     private ArrayList<Item> itens;
@@ -76,6 +79,43 @@ public class Lanchonete {
 
     }
 
+    public void salvarJson(){
+        Gson gson = new Gson();
+
+        String json = gson.toJson(this);
+
+        try(FileWriter out = new FileWriter("lanchonete.json")){
+            out.write(json);
+            out.close();
+        }catch(IOException e){
+            System.out.println("Erro ao salvar json");
+        }
+
+    }
+
+    public void carregarJson(){
+        Gson gson = new Gson();
+
+        
+        try(FileReader in=new FileReader("lanchonete.json");
+            BufferedReader bin = new BufferedReader(in)) {
+            
+            String json =bin.readLine();
+            Lanchonete temp = gson.fromJson(json, Lanchonete.class);
+            
+            this.itens = temp.getItens();
+            this.sanduiches = temp.getSanduiches();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+
+        
+    }
+
+
     public void carregarDados(){
         try (FileReader fin = new FileReader("itens.txt");
                 BufferedReader bin = new BufferedReader(fin)) {
@@ -132,6 +172,11 @@ public class Lanchonete {
 
     public ArrayList<Sanduiche> getSanduiches() {
         return sanduiches;
+    }
+
+    @Override
+    public String toString() {
+        return "Lanchonete [itens=" + itens + ", sanduiches=" + sanduiches + "]";
     }
 
     
